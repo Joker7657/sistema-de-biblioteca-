@@ -1,375 +1,55 @@
-Desenvolva um projeto completo em **Java** utilizando a arquitetura **Model-View-Controller (MVC)** e aplicando a **Java Modeling Language (JML)** em toda a implementação, conforme os conceitos da disciplina de Lógica Aplicada à Engenharia de Software.
+# BibliotecaMVC
 
-O projeto deve ser um **Sistema de Gerenciamento de Biblioteca** e todo o código deve seguir boas práticas de programação orientada a objetos, princípios SOLID quando aplicáveis e organização em camadas.
+## Descrição
 
-## Objetivo do Sistema
+O **BibliotecaMVC** é um sistema de gerenciamento de biblioteca desenvolvido em **Java**, seguindo a arquitetura **Model-View-Controller (MVC)**. O projeto foi criado com o objetivo de controlar o cadastro de livros e usuários, além de gerenciar o processo de empréstimo e devolução de livros de forma organizada, segura e consistente.
 
-O sistema deverá permitir:
+Além da implementação das funcionalidades do sistema, o projeto utiliza a **Java Modeling Language (JML)** para especificar formalmente o comportamento dos métodos e das classes, permitindo documentar regras de negócio por meio de contratos, pré-condições, pós-condições e invariantes.
 
-* Cadastro de livros;
-* Cadastro de usuários;
-* Consulta de livros;
-* Consulta de usuários;
-* Empréstimo de livros;
-* Devolução de livros;
-* Listagem de empréstimos ativos;
-* Listagem de livros disponíveis;
-* Listagem de livros emprestados.
+---
+
+## Problema Resolvido
+
+Bibliotecas precisam controlar seus livros, usuários e empréstimos de maneira confiável para evitar inconsistências, como empréstimos duplicados, cadastros inválidos ou perda do controle sobre a disponibilidade dos exemplares.
+
+O BibliotecaMVC resolve esse problema implementando regras de negócio que garantem a integridade das informações durante toda a execução do sistema.
+
+Entre as principais regras implementadas estão:
+
+- Cadastro de livros com ISBN único;
+- Cadastro de usuários com matrícula única;
+- Controle da disponibilidade dos livros;
+- Empréstimo apenas de livros disponíveis;
+- Impedimento de empréstimos duplicados para o mesmo livro;
+- Devolução somente de livros com empréstimo ativo;
+- Consulta de livros cadastrados;
+- Consulta de usuários cadastrados;
+- Listagem de empréstimos ativos;
+- Listagem de livros disponíveis e emprestados.
+
+---
+
+## Funcionalidades
+
+O sistema oferece as seguintes funcionalidades:
+
+- Cadastro, consulta, atualização e remoção de livros;
+- Cadastro, consulta, atualização e remoção de usuários;
+- Realização de empréstimos;
+- Registro de devoluções;
+- Consulta de empréstimos ativos;
+- Listagem de livros disponíveis;
+- Listagem de livros emprestados;
+- Validação automática das regras de negócio.
+
+---
 
 ## Arquitetura
 
-Organize o projeto da seguinte forma:
+O projeto foi desenvolvido utilizando a arquitetura **MVC (Model-View-Controller)**.
 
-```text
-BibliotecaMVC
-│
-├── src
-│   ├── model
-│   │   ├── Livro.java
-│   │   ├── Usuario.java
-│   │   ├── Emprestimo.java
-│   │
-│   ├── controller
-│   │   ├── LivroController.java
-│   │   ├── UsuarioController.java
-│   │   ├── EmprestimoController.java
-│   │
-│   ├── view
-│   │   ├── MenuPrincipal.java
-│   │   ├── LivroView.java
-│   │   ├── UsuarioView.java
-│   │   ├── EmprestimoView.java
-│   │
-│   ├── util
-│   │   ├── Validacoes.java
-│   │
-│   └── Main.java
-```
+- **Model:** representa as entidades do sistema (`Livro`, `Usuario` e `Emprestimo`).
+- **View:** realiza a interação com o usuário por meio do console.
+- **Controller:** implementa as regras de negócio e controla as operações realizadas sobre os modelos.
 
-## Model
-
-### Livro
-
-Atributos:
-
-* id
-* titulo
-* autor
-* isbn
-* disponivel
-
-Métodos:
-
-* construtor
-* getters
-* setters
-* emprestar()
-* devolver()
-
-Aplicar especificações JML em todos os métodos.
-
-Utilizar:
-
-* requires
-* ensures
-* invariant
-* assignable
-* pure
-* old
-* result
-
-Exemplo de contratos:
-
-* título nunca pode ser vazio;
-* ISBN nunca pode ser vazio;
-* livro só pode ser emprestado se estiver disponível;
-* livro devolvido deve ficar disponível.
-
----
-
-### Usuario
-
-Atributos:
-
-* id
-* nome
-* matricula
-* email
-
-Contratos:
-
-* nome obrigatório;
-* matrícula obrigatória;
-* email válido.
-
-Aplicar JML em todos os métodos.
-
----
-
-### Emprestimo
-
-Atributos:
-
-* Livro
-* Usuario
-* dataEmprestimo
-* dataDevolucao
-
-Regras:
-
-* um livro só pode possuir um empréstimo ativo;
-* devolução somente após empréstimo;
-* impedir empréstimo duplicado.
-
-Aplicar contratos JML completos.
-
----
-
-## Controller
-
-Criar:
-
-### LivroController
-
-Métodos:
-
-* cadastrarLivro()
-* buscarLivro()
-* listarLivros()
-* atualizarLivro()
-* removerLivro()
-
-Todos os métodos devem possuir contratos JML.
-
----
-
-### UsuarioController
-
-Métodos:
-
-* cadastrarUsuario()
-* buscarUsuario()
-* listarUsuarios()
-* atualizarUsuario()
-* removerUsuario()
-
-Todos os métodos devem possuir contratos JML.
-
----
-
-### EmprestimoController
-
-Métodos:
-
-* emprestarLivro()
-* devolverLivro()
-* listarEmprestimos()
-
-Implementar todas as regras de negócio.
-
-Adicionar contratos JML em todos os métodos.
-
-Exemplo:
-
-* livro deve existir;
-* usuário deve existir;
-* livro deve estar disponível;
-* após empréstimo o livro deve ficar indisponível;
-* após devolução o livro deve ficar disponível.
-
----
-
-## View
-
-Criar interface via console utilizando Scanner.
-
-Menu:
-
-1. Cadastrar livro
-
-2. Cadastrar usuário
-
-3. Emprestar livro
-
-4. Devolver livro
-
-5. Listar livros
-
-6. Listar usuários
-
-7. Listar empréstimos
-
-8. Sair
-
-Toda a lógica deve ficar nos Controllers.
-
-A View apenas coleta dados e apresenta resultados.
-
----
-
-## Main
-
-Criar uma classe Main responsável por iniciar o sistema.
-
-Inicializar Controllers.
-
-Abrir MenuPrincipal.
-
-Permitir interação completa.
-
----
-
-## Especificações JML
-
-Utilizar JML em praticamente todos os métodos.
-
-Aplicar:
-
-```java
-requires
-```
-
-```java
-ensures
-```
-
-```java
-invariant
-```
-
-```java
-assignable
-```
-
-```java
-assert
-```
-
-```java
-signals
-```
-
-```java
-pure
-```
-
-```java
-old
-```
-
-```java
-result
-```
-
-```java
-forall
-```
-
-```java
-exists
-```
-
-Utilizar corretamente cada recurso.
-
----
-
-## Invariantes
-
-Exemplos:
-
-Livro
-
-* título diferente de vazio;
-* ISBN diferente de vazio.
-
-Usuário
-
-* nome diferente de vazio;
-* matrícula diferente de vazio.
-
-Empréstimo
-
-* livro nunca pode ser nulo;
-* usuário nunca pode ser nulo.
-
----
-
-## Pré-condições
-
-Exemplos:
-
-Emprestar livro
-
-* livro existe;
-* usuário existe;
-* livro disponível.
-
-Cadastrar usuário
-
-* nome preenchido;
-* matrícula preenchida.
-
-Cadastrar livro
-
-* título preenchido;
-* autor preenchido;
-* ISBN preenchido.
-
----
-
-## Pós-condições
-
-Emprestar
-
-* livro indisponível;
-* empréstimo criado.
-
-Devolver
-
-* livro disponível;
-* empréstimo encerrado.
-
-Cadastro
-
-* objeto armazenado corretamente.
-
----
-
-## Tratamento de erros
-
-Utilizar exceções apropriadas.
-
-Nunca permitir:
-
-* livro inexistente;
-* usuário inexistente;
-* empréstimo duplicado;
-* devolução duplicada;
-* ISBN repetido;
-* matrícula repetida.
-
----
-
-## Qualidade do código
-
-Aplicar:
-
-* encapsulamento;
-* baixo acoplamento;
-* alta coesão;
-* orientação a objetos;
-* nomes claros;
-* comentários apenas quando necessários;
-* código limpo.
-
----
-
-## Entrega
-
-Gerar o projeto completamente funcional.
-
-Todo o código deve compilar sem erros.
-
-Todas as classes devem possuir especificações JML completas.
-
-Não gerar código incompleto, pseudocódigo ou exemplos. Implementar toda a aplicação pronta para execução em Java, utilizando a arquitetura MVC e aplicando corretamente a Java Modeling Language em todas as classes e métodos.
+Essa organização promove baixo acoplamento, maior organização do código e facilidade de manutenção.
